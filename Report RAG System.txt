@@ -1,0 +1,85 @@
+Report: Retrieval Augmented Generation (RAG) System
+
+Objective
+The objective was to develop a Retrieval Augmented Generation (RAG) system capable of answering user queries using content from specific websites. The system supports the following functionalities:
+
+Extract content from provided URLs and store embeddings in a vector database.
+Answer user questions by retrieving relevant information and generating coherent responses.
+Include citations in the answers.
+Provide a user-friendly interface and deploy the system as a secure, scalable API.
+
+Approach
+
+Text Scraping:
+Content was extracted from websites using BeautifulSoup.
+The extracted text was preprocessed to remove noise, ensuring clean and meaningful data for embedding.
+
+Embedding Generation:
+Used sentence-transformers to generate embeddings from extracted text.
+Embeddings were stored in a vector database (FAISS) for efficient similarity search.
+
+Query Retrieval:
+User queries were encoded into embeddings.
+The vector database was queried to find the most relevant pieces of content.
+
+Answer Generation:
+A pre-trained language model (FLAN-T5) was used to generate answers by combining user questions with retrieved snippets.
+
+Citation Mechanism:
+Stored source metadata (URLs) alongside embeddings.
+Retrieved snippets included corresponding citations, which were appended to the generated responses.
+
+API Development:
+Developed API endpoints using FastAPI:
+/api/v1/index for URL indexing.
+/api/v1/chat for answering user queries.
+Implemented basic authentication using an API key.
+
+User Interface:
+Created a simple user interface using Streamlit for demonstrating the RAG system.
+
+Testing and Deployment:
+Wrote unit tests for utilities and API endpoints.
+Provided a Dockerfile for containerization and deployment.
+--------------------------------------------------------------------------------------------------
+Challenges Faced
+
+Text Extraction:
+Some websites had dynamic content, making it challenging to extract data using static methods like BeautifulSoup. Dynamic content scraping was avoided as it went beyond the problem scope.
+
+Embedding Performance:
+Balancing speed and accuracy while generating embeddings for large text blocks required segmenting content effectively without losing context.
+
+Answer Quality:
+Ensuring the language model used the retrieved snippets effectively without "hallucinating" or generating unrelated information was critical.
+
+Citation Accuracy:
+Linking answers to specific sources required careful metadata management to avoid mismatches.
+
+Authentication:
+Implementing secure yet simple authentication required designing an API key mechanism that could be easily tested and deployed.
+--------------------------------------------------------------------------------------------------------------------
+
+Potential Improvements
+
+Dynamic Content Handling:
+Add support for scraping dynamic websites using tools like selenium or playwright to handle JavaScript-rendered pages.
+
+Advanced Retrieval Models:
+Use more sophisticated retrieval methods like dense retrieval models (e.g., ColBERT) for better query-context matching.
+
+Improved Citation Mechanism:
+Highlight the specific portions of the source text that contributed to the answer for enhanced traceability.
+
+Scalability:
+Replace the FAISS backend with a scalable cloud-based vector database like Pinecone or Weaviate for larger datasets.
+
+Enhanced UI:
+Include additional features in the user interface, such as file uploads for indexing or real-time visualization of citations.
+
+Authentication:
+Implement OAuth2 or JWT-based authentication for a more robust security model.
+
+Deployment:
+Automate deployment pipelines using CI/CD tools like GitHub Actions or GitLab CI.
+-------------------------------------------------------------------------------------------------
